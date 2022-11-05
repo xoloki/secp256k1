@@ -127,7 +127,7 @@ typedef int (*secp256k1_nonce_function)(
 #   define SECP256K1_INLINE
 #  endif
 # else
-#  define SECP256K1_INLINE inline
+#  define SECP256K1_INLINE
 # endif
 
 /** When this header is used at build-time the SECP256K1_BUILD define needs to be set

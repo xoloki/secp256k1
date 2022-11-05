@@ -56,7 +56,7 @@ SECP256K1_INLINE unsigned int secp256k1_scalar_get_bits_var(const secp256k1_scal
     }
 }
 
-SECP256K1_INLINE int secp256k1_scalar_check_overflow(const secp256k1_scalar *a) {
+int secp256k1_scalar_check_overflow(const secp256k1_scalar *a) {
     int yes = 0;
     int no = 0;
     no |= (a->d[3] < SECP256K1_N_3); /* No need for a > check. */
@@ -68,7 +68,7 @@ SECP256K1_INLINE int secp256k1_scalar_check_overflow(const secp256k1_scalar *a) 
     return yes;
 }
 
-SECP256K1_INLINE int secp256k1_scalar_reduce(secp256k1_scalar *r, unsigned int overflow) {
+int secp256k1_scalar_reduce(secp256k1_scalar *r, unsigned int overflow) {
     uint128_t t;
     VERIFY_CHECK(overflow <= 1);
     t = (uint128_t)r->d[0] + overflow * SECP256K1_N_C_0;

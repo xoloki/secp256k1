@@ -13,6 +13,7 @@
 #include "util.h"
 #include "field_impl.h"
 #include "scalar_impl.h"
+#include "scalar_4x64_impl.h"
 #include "group_impl.h"
 #include "ecmult_impl.h"
 #include "ecmult_const_impl.h"
