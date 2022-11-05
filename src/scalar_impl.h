@@ -28,10 +28,10 @@
 #error "Please select wide multiplication implementation"
 #endif
 
-static const secp256k1_scalar secp256k1_scalar_one = SECP256K1_SCALAR_CONST(0, 0, 0, 0, 0, 0, 0, 1);
-static const secp256k1_scalar secp256k1_scalar_zero = SECP256K1_SCALAR_CONST(0, 0, 0, 0, 0, 0, 0, 0);
+const secp256k1_scalar secp256k1_scalar_one = SECP256K1_SCALAR_CONST(0, 0, 0, 0, 0, 0, 0, 1);
+const secp256k1_scalar secp256k1_scalar_zero = SECP256K1_SCALAR_CONST(0, 0, 0, 0, 0, 0, 0, 0);
 
-static int secp256k1_scalar_set_b32_seckey(secp256k1_scalar *r, const unsigned char *bin) {
+int secp256k1_scalar_set_b32_seckey(secp256k1_scalar *r, const unsigned char *bin) {
     int overflow;
     secp256k1_scalar_set_b32(r, bin, &overflow);
     return (!overflow) & (!secp256k1_scalar_is_zero(r));
@@ -53,7 +53,7 @@ static int secp256k1_scalar_set_b32_seckey(secp256k1_scalar *r, const unsigned c
  * nontrivial to get full test coverage for the exhaustive tests. We therefore
  * (arbitrarily) set r2 = k + 5 (mod n) and r1 = k - r2 * lambda (mod n).
  */
-static void secp256k1_scalar_split_lambda(secp256k1_scalar *r1, secp256k1_scalar *r2, const secp256k1_scalar *k) {
+void secp256k1_scalar_split_lambda(secp256k1_scalar *r1, secp256k1_scalar *r2, const secp256k1_scalar *k) {
     *r2 = (*k + 5) % EXHAUSTIVE_TEST_ORDER;
     *r1 = (*k + (EXHAUSTIVE_TEST_ORDER - *r2) * EXHAUSTIVE_TEST_LAMBDA) % EXHAUSTIVE_TEST_ORDER;
 }
@@ -61,13 +61,13 @@ static void secp256k1_scalar_split_lambda(secp256k1_scalar *r1, secp256k1_scalar
 /**
  * The Secp256k1 curve has an endomorphism, where lambda * (x, y) = (beta * x, y), where
  * lambda is: */
-static const secp256k1_scalar secp256k1_const_lambda = SECP256K1_SCALAR_CONST(
+const secp256k1_scalar secp256k1_const_lambda = SECP256K1_SCALAR_CONST(
     0x5363AD4CUL, 0xC05C30E0UL, 0xA5261C02UL, 0x8812645AUL,
     0x122E22EAUL, 0x20816678UL, 0xDF02967CUL, 0x1B23BD72UL
 );
 
 #ifdef VERIFY
-static void secp256k1_scalar_split_lambda_verify(const secp256k1_scalar *r1, const secp256k1_scalar *r2, const secp256k1_scalar *k);
+void secp256k1_scalar_split_lambda_verify(const secp256k1_scalar *r1, const secp256k1_scalar *r2, const secp256k1_scalar *k);
 #endif
 
 /*
@@ -120,7 +120,7 @@ static void secp256k1_scalar_split_lambda_verify(const secp256k1_scalar *r1, con
  *
  * See proof below.
  */
-static void secp256k1_scalar_split_lambda(secp256k1_scalar *r1, secp256k1_scalar *r2, const secp256k1_scalar *k) {
+void secp256k1_scalar_split_lambda(secp256k1_scalar *r1, secp256k1_scalar *r2, const secp256k1_scalar *k) {
     secp256k1_scalar c1, c2;
     static const secp256k1_scalar minus_b1 = SECP256K1_SCALAR_CONST(
         0x00000000UL, 0x00000000UL, 0x00000000UL, 0x00000000UL,
@@ -260,7 +260,7 @@ static void secp256k1_scalar_split_lambda(secp256k1_scalar *r1, secp256k1_scalar
  *
  * Q.E.D.
  */
-static void secp256k1_scalar_split_lambda_verify(const secp256k1_scalar *r1, const secp256k1_scalar *r2, const secp256k1_scalar *k) {
+void secp256k1_scalar_split_lambda_verify(const secp256k1_scalar *r1, const secp256k1_scalar *r2, const secp256k1_scalar *k) {
     secp256k1_scalar s;
     unsigned char buf1[32];
     unsigned char buf2[32];
