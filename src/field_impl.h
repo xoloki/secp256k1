@@ -21,21 +21,21 @@
 #error "Please select wide multiplication implementation"
 #endif
 
-SECP256K1_INLINE static int secp256k1_fe_equal(const secp256k1_fe *a, const secp256k1_fe *b) {
+SECP256K1_INLINE int secp256k1_fe_equal(const secp256k1_fe *a, const secp256k1_fe *b) {
     secp256k1_fe na;
     secp256k1_fe_negate(&na, a, 1);
     secp256k1_fe_add(&na, b);
     return secp256k1_fe_normalizes_to_zero(&na);
 }
 
-SECP256K1_INLINE static int secp256k1_fe_equal_var(const secp256k1_fe *a, const secp256k1_fe *b) {
+SECP256K1_INLINE int secp256k1_fe_equal_var(const secp256k1_fe *a, const secp256k1_fe *b) {
     secp256k1_fe na;
     secp256k1_fe_negate(&na, a, 1);
     secp256k1_fe_add(&na, b);
     return secp256k1_fe_normalizes_to_zero_var(&na);
 }
 
-static int secp256k1_fe_sqrt(secp256k1_fe *r, const secp256k1_fe *a) {
+int secp256k1_fe_sqrt(secp256k1_fe *r, const secp256k1_fe *a) {
     /** Given that p is congruent to 3 mod 4, we can compute the square root of
      *  a mod p as the (p+1)/4'th power of a.
      *
@@ -135,6 +135,6 @@ static int secp256k1_fe_sqrt(secp256k1_fe *r, const secp256k1_fe *a) {
     return secp256k1_fe_equal(&t1, a);
 }
 
-static const secp256k1_fe secp256k1_fe_one = SECP256K1_FE_CONST(0, 0, 0, 0, 0, 0, 0, 1);
+const secp256k1_fe secp256k1_fe_one = SECP256K1_FE_CONST(0, 0, 0, 0, 0, 0, 0, 1);
 
 #endif /* SECP256K1_FIELD_IMPL_H */
