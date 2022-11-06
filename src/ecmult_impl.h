@@ -332,7 +332,7 @@ static void secp256k1_ecmult_strauss_wnaf(const struct secp256k1_strauss_state *
     }
 }
 
-static void secp256k1_ecmult(secp256k1_gej *r, const secp256k1_gej *a, const secp256k1_scalar *na, const secp256k1_scalar *ng) {
+void secp256k1_ecmult(secp256k1_gej *r, const secp256k1_gej *a, const secp256k1_scalar *na, const secp256k1_scalar *ng) {
     secp256k1_gej prej[ECMULT_TABLE_SIZE(WINDOW_A)];
     secp256k1_fe zr[ECMULT_TABLE_SIZE(WINDOW_A)];
     secp256k1_ge pre_a[ECMULT_TABLE_SIZE(WINDOW_A)];
@@ -805,7 +805,7 @@ static int secp256k1_ecmult_multi_batch_size_helper(size_t *n_batches, size_t *n
 }
 
 typedef int (*secp256k1_ecmult_multi_func)(const secp256k1_callback* error_callback, secp256k1_scratch*, secp256k1_gej*, const secp256k1_scalar*, secp256k1_ecmult_multi_callback cb, void*, size_t);
-static int secp256k1_ecmult_multi_var(const secp256k1_callback* error_callback, secp256k1_scratch *scratch, secp256k1_gej *r, const secp256k1_scalar *inp_g_sc, secp256k1_ecmult_multi_callback cb, void *cbdata, size_t n) {
+int secp256k1_ecmult_multi_var(const secp256k1_callback* error_callback, secp256k1_scratch *scratch, secp256k1_gej *r, const secp256k1_scalar *inp_g_sc, secp256k1_ecmult_multi_callback cb, void *cbdata, size_t n) {
     size_t i;
 
     int (*f)(const secp256k1_callback* error_callback, secp256k1_scratch*, secp256k1_gej*, const secp256k1_scalar*, secp256k1_ecmult_multi_callback cb, void*, size_t, size_t);
